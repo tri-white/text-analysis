@@ -44,18 +44,14 @@ $(function(){
 <div id="footer"></div>
 <script>
     $(function () {
-        // Analyze button click event handler
         $("#analyzeButton").click(function () {
-            // Get the text input value
             var inputText = $("#textInput").val();
 
-            // Perform text analysis
             var wordCount = inputText.split(/\s+/).filter(Boolean).length;
             var punctuationCount = (inputText.match(/[.,!?;:'"]/g) || []).length;
             var charCount = inputText.length;
             var capitalCount = (inputText.match(/[А-Я]/g) || []).length;
 
-            // Update the analysis results on the page
             $("#wordCount").text(wordCount);
             $("#punctuationCount").text(punctuationCount);
             $("#charCount").text(charCount);
