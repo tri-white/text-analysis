@@ -21,6 +21,26 @@ $(function(){
 <body>
     <div id="header"></div>
 
+  <div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5">
+            <textarea id="textInput" class="form-control" rows="5" placeholder="Тут має бути ваш текст"></textarea>
+            <button id="analyzeButton" class="btn btn-primary mt-3">Проаналізувати</button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Результати аналізу</h2>
+            <p>Кількість слів:<span id="wordCount">0</span></p>
+            <p>Кількість знаків пунктуації:<span id="punctuationCount">0</span></p>
+            <p>Кількість символів:<span id="charCount">0</span></p>
+            <p>Кількість великих літер:<span id="capitalCount">0</span></p>
+        </div>
+    </div>
+</div>
 <div id="footer"></div>
 </body>
 </html>
