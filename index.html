@@ -64,6 +64,38 @@ $(function(){
             $("#punctuationCount").text(punctuationCount);
             $("#charCount").text(charCount);
             $("#capitalCount").text(capitalCount);
+
+             // Language Detection
+    var language = franc(inputText);
+    $("#language").text(language);
+
+    // Keyword Extraction
+    var natural = require('natural');
+    var tokenizer = new natural.WordTokenizer();
+    var tfidf = new natural.TfIdf();
+
+    // Tokenize and add documents
+    var documents = inputText.split(/\n/); // Split text into documents if needed
+    documents.forEach(function (document) {
+        var tokens = tokenizer.tokenize(document);
+        tfidf.addDocument(tokens);
+    });
+
+    // Get top keywords
+    var topKeywords = tfidf.listTerms(0 /* Document index */).slice(0, 10); // Get the top 10 keywords
+    var keywordList = topKeywords.map(function (item) {
+        return item.term;
+    });
+
+    $("#keywords").text(keywordList.join(", "));
+
+    // Text Summarization
+    var summary = new Summary();
+    summary.extract(inputText, 5 /* Number of sentences in the summary */, function (err, output) {
+        if (!err) {
+            $("#summary").text(output);
+        }
+    });
         });
     });
 </script>
