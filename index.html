@@ -54,7 +54,7 @@ $(function(){
             var wordCount = inputText.split(/\s+/).filter(Boolean).length;
             var punctuationCount = (inputText.match(/[.,!?;:'"]/g) || []).length;
             var charCount = inputText.length;
-            var capitalCount = (inputText.match(/[А-Я]/g) || []).length;
+            var capitalCount = (inputText.match(/[А-Я]/g) || []).length+(inputText.match(/[A-Z]/g) || []).length;
 
             $("#wordCount").text(wordCount);
             $("#punctuationCount").text(punctuationCount);
