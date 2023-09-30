@@ -41,7 +41,6 @@ $(function(){
             <p>Кількість великих літер: <span id="capitalCount">0</span></p>
             <p>Мова тексту: <span id="language"></span></p>
             <p>Ключові слова: <span id="keywords"></span></p>
-            <p>Зведена інформація: <span id="summary"></span></p>
             
         </div>
     </div>
@@ -62,39 +61,41 @@ $(function(){
             $("#charCount").text(charCount);
             $("#capitalCount").text(capitalCount);
 
-             // Language Detection
-    var language = franc(inputText);
-    $("#language").text(language);
+            var language = detectLanguage(inputText);
+            $("#language").text(language);  
 
-    // Keyword Extraction
-    var natural = require('natural');
-    var tokenizer = new natural.WordTokenizer();
-    var tfidf = new natural.TfIdf();
-
-    // Tokenize and add documents
-    var documents = inputText.split(/\n/); // Split text into documents if needed
-    documents.forEach(function (document) {
-        var tokens = tokenizer.tokenize(document);
-        tfidf.addDocument(tokens);
-    });
-
-    // Get top keywords
-    var topKeywords = tfidf.listTerms(0 /* Document index */).slice(0, 10); // Get the top 10 keywords
-    var keywordList = topKeywords.map(function (item) {
-        return item.term;
-    });
-
-    $("#keywords").text(keywordList.join(", "));
-
-    // Text Summarization
-    var summary = new Summary();
-    summary.extract(inputText, 5 /* Number of sentences in the summary */, function (err, output) {
-        if (!err) {
-            $("#summary").text(output);
-        }
-    });
+            var topKeywords = extractKeywords(inputText, 10); // Get the top 10 keywords
+$("#keywords").text(topKeywords.join(", "));
         });
     });
+    function detectLanguage(text) {
+    if (text.match(/[A-Za-z]/)) {
+        return "Англійська";
+    } else if (text.match(/[А-Яа-я]/)) {
+        return "Українська";
+    } else {
+        return "Невідомо";
+    }
+}
+function extractKeywords(text, limit) {
+    var words = text.split(/\s+/).filter(Boolean);
+    var wordCountMap = {};
+
+    words.forEach(function (word) {
+        var cleanWord = word.toLowerCase();
+        if (wordCountMap[cleanWord]) {
+            wordCountMap[cleanWord]++;
+        } else {
+            wordCountMap[cleanWord] = 1;
+        }
+    });
+
+    var sortedWords = Object.keys(wordCountMap).sort(function (a, b) {
+        return wordCountMap[b] - wordCountMap[a];
+    });
+
+    return sortedWords.slice(0, limit);
+}
 </script>
 </body>
 </html>
