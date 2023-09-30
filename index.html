@@ -41,6 +41,10 @@ $(function(){
             <p>Кількість великих літер: <span id="capitalCount">0</span></p>
             <p>Мова тексту: <span id="language"></span></p>
             <p>Ключові слова: <span id="keywords"></span></p>
+            <p>Кількість речень: <span id="sentenceCount"></span></p>
+            <p>Середня довжина слова: <span id="averageWordLength"></span></p>
+
+
             
         </div>
     </div>
@@ -64,8 +68,18 @@ $(function(){
             var language = detectLanguage(inputText);
             $("#language").text(language);  
 
-            var topKeywords = extractKeywords(inputText, 10); // Get the top 10 keywords
+            var topKeywords = extractKeywords(inputText, 10);
 $("#keywords").text(topKeywords.join(", "));
+
+var sentenceCount = (inputText.match(/[.!?]/g) || []).length;
+$("#sentenceCount").text(sentenceCount);
+
+var words = inputText.split(/\s+/).filter(Boolean);
+var totalWordLength = words.reduce(function (sum, word) {
+    return sum + word.length;
+}, 0);
+var averageWordLength = totalWordLength / wordCount;
+$("#averageWordLength").text(averageWordLength.toFixed(1));
         });
     });
     function detectLanguage(text) {
