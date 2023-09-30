@@ -1,15 +1,15 @@
 # Functionality
 
-word count
-punctuation count
-determine language
-capitals count
-keywords (most common words)
+word count /
+punctuation count /
+determine language /
+capitals count /
+keywords (most common words) /
 sentence count
 
 # Tech stack
 
-Pure js/html/bootstrap
+Pure js/html/bootstrap / 
 Language: Ukrainian
 
 # Photos
